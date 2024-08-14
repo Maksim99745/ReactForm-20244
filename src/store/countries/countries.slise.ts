@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { allowedCountries } from '../../core/schemas/schemas';
 
-const initialState: string[] = ['USA', 'Poland', 'Italy'];
+const initialState: string[] = allowedCountries;
 
 export const countriesSlice = createSlice({
   name: 'countries',

@@ -20,15 +20,13 @@ module.exports = {
   parserOptions: {
     project: './tsconfig.json',
   },
-  plugins: [
-    'react-refresh',
-    '@typescript-eslint',
-    'react',
-    'prettier',
-    'unused-imports',
-    'react-compiler'
-  ],
+  plugins: ['react-refresh', '@typescript-eslint', 'react', 'prettier', 'unused-imports', 'react-compiler'],
   rules: {
+    "jsx-a11y/label-has-associated-control": ["error", {
+      "required": {
+        "some": ["nesting", "id"]
+      }
+    }],
     '@typescript-eslint/no-unused-vars': [
       'warn',
       {
@@ -85,9 +83,9 @@ module.exports = {
     '@typescript-eslint/lines-between-class-members': 'off',
     'no-return-assign': 'off',
     'react/jsx-props-no-spreading': 'off',
-    "react-compiler/react-compiler": "error",
+    'react-compiler/react-compiler': 'error',
     'react/prefer-stateless-function': 'off',
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
-    "react-hooks/exhaustive-deps": 'off',
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'react-hooks/exhaustive-deps': 'off',
   },
 };

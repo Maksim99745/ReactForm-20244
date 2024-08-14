@@ -1,0 +1,31 @@
+label {
+  align-self: flex-start;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px;
+  gap: 3px;
+}
+
+.gender {
+  display: flex;
+  border-radius: 5px;
+  margin-top: 5px;
+  justify-content: space-between;
+}
+
+.countries-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.agreement {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 14px;
+  gap: 5px;
+}

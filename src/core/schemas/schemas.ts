@@ -10,6 +10,7 @@ const allowedCountriesMessage = `Country should be in the list ${allowedCountrie
 
 const avatarSchema = yup
   .mixed<File>()
+  .required('Avatar is required')
   .test(
     'fileType',
     'File type must be either image/jpeg or image/png',
@@ -32,7 +33,10 @@ export const schema = yup.object().shape({
     .required('Name is required')
     .matches(/^[A-Z]/, 'First letter must be uppercase')
     .max(MAX_PERSONAL_DATA_LENGTH, MAX_LENGTH_MESSAGE),
-  age: yup.string().matches(/^[1-9]\d*$/, 'Age must be a positive number'),
+  age: yup
+    .string()
+    .required('Age is required')
+    .matches(/^[1-9]\d*$/, 'Age must be a positive number'),
   email: yup.string().required('Email is required').email('Invalid email format'),
   password: passwordSchema,
   confirmPassword: yup
@@ -42,5 +46,5 @@ export const schema = yup.object().shape({
   gender: yup.string().required('Gender is required'),
   agreement: yup.string().required('It"s mandatory to accept the Terms and Conditions'),
   avatar: avatarSchema,
-  country: yup.string().oneOf(allowedCountries, allowedCountriesMessage),
+  country: yup.string().required('Country is required').oneOf(allowedCountries, allowedCountriesMessage),
 });

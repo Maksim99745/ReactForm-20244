@@ -6,7 +6,11 @@ import { ControlledForm, MainPage, NotFoundPage, UncontrolledForm } from './rout
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <MainPage />,
+    element: (
+      <Suspense fallback={<LoaderSpinner />}>
+        <MainPage />
+      </Suspense>
+    ),
     children: [],
   },
   {

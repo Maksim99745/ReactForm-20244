@@ -1,11 +1,11 @@
-export interface FormData {
+export interface UncontrolledFormData {
   name: string;
   age: string;
   email: string;
   password: string;
   confirmPassword: string;
   gender: string;
-  agreement: boolean;
+  agreement: string;
   avatar: string;
   country: string;
 }

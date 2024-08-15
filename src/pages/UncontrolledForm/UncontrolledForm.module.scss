@@ -41,6 +41,32 @@ label {
   color: red;
 }
 
-.submit-Button {
+.submit-button {
   margin-top: 10px;
+}
+
+.strength-level-box {
+  align-self: flex-start;
+  font-size: 12px;
+  height: 12px;
+}
+
+.low {
+  color: rgb(151, 2, 2);
+}
+
+.middle {
+  color: rgb(223, 220, 49);
+}
+
+.good {
+  color: green;
+}
+
+.visible {
+  opacity: 1;
+}
+
+.invisible {
+  opacity: 0;
 }

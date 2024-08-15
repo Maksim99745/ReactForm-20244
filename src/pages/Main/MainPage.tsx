@@ -24,6 +24,7 @@ export default function MainPage() {
             isLast={index === uncontrolledFormData.length - 1}
           />
         ))}
+        {uncontrolledFormData.length === 0 && <div>There will be placed your data</div>}
       </div>
     </div>
   );

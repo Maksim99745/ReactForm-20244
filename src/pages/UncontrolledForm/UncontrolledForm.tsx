@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { RootState } from '../../store/store';
@@ -7,6 +8,7 @@ import useValidation from './hooks/useValidation';
 
 export default function UncontrolledForm() {
   const countries = useSelector((state: RootState) => state.countries);
+  const formRef = useRef<HTMLFormElement>(null);
   const {
     findError,
     handleSubmit,
@@ -25,7 +27,7 @@ export default function UncontrolledForm() {
   return (
     <div>
       <h4>Uncontrolled Form</h4>
-      <form className={styles.formContainer} onSubmit={handleSubmit} onChange={handleUnBlockForm}>
+      <form ref={formRef} className={styles.formContainer} onSubmit={handleSubmit} onChange={handleUnBlockForm}>
         <label htmlFor="name">Name</label>
         <input type="text" id="name" name="name" />
         <span className={styles.error}>{findError('name')}</span>

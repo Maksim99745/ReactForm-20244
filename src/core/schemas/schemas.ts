@@ -31,7 +31,7 @@ export const schema = yup.object().shape({
   name: yup
     .string()
     .required('Name is required')
-    .matches(/^[A-Z]/, 'First letter must be uppercase')
+    .matches(/^[A-Z]/, 'First letter must be uppercase, only latin alphabet')
     .max(MAX_PERSONAL_DATA_LENGTH, MAX_LENGTH_MESSAGE),
   age: yup
     .string()

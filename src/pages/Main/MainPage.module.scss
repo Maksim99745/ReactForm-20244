@@ -24,3 +24,9 @@
 .link-container {
   border-bottom: 2px solid rgb(83, 83, 83);
 }
+
+@media (max-width: 768px) {
+  .tiles-container {
+    flex-direction: column;
+  }
+}

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
-import { schema } from '../../../core/schemas/schemas';
+import { uncontrolledFormSchema } from '../../../core/schemas/schemas';
 import imageToBase64 from '../../../utils/imageToBase64';
-import { useActions } from '../../hooks/useMainPageActions';
+import { useActions } from '../../Main/hooks/useMainPageActions';
 
-const useValidation = () => {
+const useCustomValidation = () => {
   const [showPasswordStrength, setShowPasswordStrength] = useState<'visible' | 'invisible'>('invisible');
   const [isNotAbleToSubmit, setIsNotAbleToSubmit] = useState(false);
   const [errorMessages, setErrorMessages] = useState<yup.ValidationError[] | []>([]);
@@ -17,7 +17,7 @@ const useValidation = () => {
     const data = new FormData(event.currentTarget);
     const formValues = Object.fromEntries(data.entries());
     try {
-      const formData = await schema.validate(formValues, { abortEarly: false });
+      const formData = await uncontrolledFormSchema.validate(formValues, { abortEarly: false });
       const avatarBase64 = await imageToBase64(formData.avatar);
       const formDataWithImage = { ...formData, avatar: avatarBase64 };
       addUncontrolledFormData(formDataWithImage);
@@ -54,4 +54,4 @@ const useValidation = () => {
   };
 };
 
-export default useValidation;
+export default useCustomValidation;

@@ -1,4 +1,4 @@
-function imageToBase64(file: File): Promise<string> {
+function imageToBase64(file: File | FileList): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -8,7 +8,11 @@ function imageToBase64(file: File): Promise<string> {
     reader.onerror = (error) => {
       reject(error);
     };
-    reader.readAsDataURL(file);
+    if (file instanceof File) {
+      reader.readAsDataURL(file);
+    } else {
+      reader.readAsDataURL(file[0]);
+    }
   });
 }
 

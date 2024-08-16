@@ -5,7 +5,7 @@ export interface ControlledFormData {
   password: string;
   confirmPassword: string;
   gender: string;
-  agreement: string;
-  avatar: File;
+  agreement: boolean;
+  avatar: FileList;
   country: string;
 }

@@ -2,8 +2,8 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { RootState } from '../../store/store';
 import styles from '../forms.module.scss';
-import usePasswordStrength from './hooks/usePasswordStrength';
-import useValidation from './hooks/useValidation';
+import usePasswordStrength from '../Main/hooks/usePasswordStrength';
+import useCustomValidation from './hooks/useCustomValidation';
 
 export default function UncontrolledForm() {
   const countries = useSelector((state: RootState) => state.countries);
@@ -14,11 +14,11 @@ export default function UncontrolledForm() {
     isNotAbleToSubmit,
     showPasswordStrength,
     setShowPasswordStrength,
-  } = useValidation();
+  } = useCustomValidation();
 
   const { checkTheStrength, strengthLevel } = usePasswordStrength();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     checkTheStrength(e.target.value);
   };
 
@@ -43,7 +43,7 @@ export default function UncontrolledForm() {
           type="text"
           id="password"
           name="password"
-          onChange={handleChange}
+          onChange={handlePasswordChange}
           onFocus={() => setShowPasswordStrength('visible')}
         />
         <span className={`${styles.strengthLevelBox} ${styles[strengthLevel]} ${styles[showPasswordStrength]}`}>
@@ -71,15 +71,15 @@ export default function UncontrolledForm() {
 
         <div className={styles.agreement}>
           <label htmlFor="agreement">Accept Terms and Conditions agreement </label>
-          <input type="checkbox" id="agreement" name="agreement" />
-          <span className={styles.error}>{findError('agreement')}</span>
+          <input type="checkbox" id="agreement" name="agreement" data-val="true" value="true" />
         </div>
+        <span className={styles.error}>{findError('agreement')}</span>
 
         <div className={styles.avatarContainer}>
           <label htmlFor="avatar">Upload picture: jpeg/png format, max size - 1 megabyte</label>
           <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" />
-          <span className={styles.error}>{findError('avatar')}</span>
         </div>
+        <div className={styles.error}>{findError('avatar')}</div>
 
         <div className={styles.countriesList}>
           <label htmlFor="country">Country</label>

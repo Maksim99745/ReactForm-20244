@@ -1,27 +1,46 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { schema } from '../../core/schemas/schemas';
+import { Link, useNavigate } from 'react-router-dom';
+import { controlledFormSchema } from '../../core/schemas/schemas';
 import { ControlledFormData } from '../../models/ControlledFormData';
 import { RootState } from '../../store/store';
+import imageToBase64 from '../../utils/imageToBase64';
 import styles from '../forms.module.scss';
+import { useActions } from '../Main/hooks/useMainPageActions';
+import usePasswordStrength from '../Main/hooks/usePasswordStrength';
 
 export default function ControlledForm() {
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
-  } = useForm<ControlledFormData>({ resolver: yupResolver(schema) });
-  const countries = useSelector((state: RootState) => state.countries);
+  } = useForm<ControlledFormData>({ resolver: yupResolver(controlledFormSchema), mode: 'onChange' });
 
-  const onSubmit = (data: ControlledFormData) => {
-    // console.log(data);
+  const countries = useSelector((state: RootState) => state.countries);
+  const { addControlledFormData } = useActions();
+  const { checkTheStrength, strengthLevel } = usePasswordStrength();
+  const [showPasswordStrength, setShowPasswordStrength] = useState<'visible' | 'invisible'>('invisible');
+  const navigate = useNavigate();
+
+  const onSubmit = async (formData: ControlledFormData) => {
+    const avatarBase64 = await imageToBase64(formData.avatar);
+    const formDataWithImage = { ...formData, avatar: avatarBase64 };
+    addControlledFormData(formDataWithImage);
+    setShowPasswordStrength('invisible');
+    reset();
+    navigate('/');
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    checkTheStrength(e.target.value);
   };
 
   return (
     <div>
-      <h4>Controlled Form</h4>
+      <h4>React hook from</h4>
       <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="name">Name</label>
         <input type="text" id="name" {...register('name')} />
@@ -36,10 +55,19 @@ export default function ControlledForm() {
         <span className={styles.error}>{errors?.email?.message}</span>
 
         <label htmlFor="password">Password</label>
-        <input type="text" id="password" {...register('password')} />
-        {/* <span className={`${styles.strengthLevelBox} ${styles[strengthLevel]} ${styles[showPasswordStrength]}`}>
+        <input
+          type="text"
+          id="password"
+          {...register('password', {
+            onChange: (e) => {
+              handlePasswordChange(e);
+            },
+          })}
+          onFocus={() => setShowPasswordStrength('visible')}
+        />
+        <span className={`${styles.strengthLevelBox} ${styles[strengthLevel]} ${styles[showPasswordStrength]}`}>
           {`Password strength is ${strengthLevel}`}
-        </span> */}
+        </span>
         <span className={styles.error}>{errors?.password?.message}</span>
 
         <label htmlFor="confirmPassword">Confirm password</label>
@@ -63,6 +91,7 @@ export default function ControlledForm() {
           <label htmlFor="agreement">Accept Terms and Conditions agreement </label>
           <input type="checkbox" id="agreement" {...register('agreement')} />
         </div>
+
         <span className={styles.error}>{errors?.agreement?.message}</span>
 
         <div className={styles.avatarContainer}>

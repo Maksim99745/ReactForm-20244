@@ -4,18 +4,12 @@ import { RootState } from '../../store/store';
 import styles from '../forms.module.scss';
 import usePasswordStrength from '../Main/hooks/usePasswordStrength';
 import useCustomValidation from './hooks/useCustomValidation';
+import { usePasswordVisibility } from './hooks/usePasswordVisibility';
 
 export default function UncontrolledForm() {
   const countries = useSelector((state: RootState) => state.countries);
-  const {
-    findError,
-    handleSubmit,
-    handleUnBlockForm,
-    isNotAbleToSubmit,
-    showPasswordStrength,
-    setShowPasswordStrength,
-  } = useCustomValidation();
-
+  const { findError, handleSubmit, showPasswordStrength, setShowPasswordStrength } = useCustomValidation();
+  const { passwordVisibility, togglePasswordVisibility } = usePasswordVisibility();
   const { checkTheStrength, strengthLevel } = usePasswordStrength();
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +19,7 @@ export default function UncontrolledForm() {
   return (
     <div>
       <h4>Uncontrolled Form</h4>
-      <form className={styles.formContainer} onSubmit={handleSubmit} onChange={handleUnBlockForm}>
+      <form className={styles.formContainer} onSubmit={handleSubmit}>
         <label htmlFor="name">Name</label>
         <input type="text" id="name" name="name" />
         <span className={styles.error}>{findError('name')}</span>
@@ -40,20 +34,23 @@ export default function UncontrolledForm() {
 
         <label htmlFor="password">Password</label>
         <input
-          type="text"
+          type={passwordVisibility}
           id="password"
           name="password"
           onChange={handlePasswordChange}
           onFocus={() => setShowPasswordStrength('visible')}
         />
+        <div className="password-visibility">
+          <label htmlFor="passwordVisibility">Show passwords</label>
+          <input type="checkbox" name="passwordVisibility" onChange={togglePasswordVisibility} />
+        </div>
         <span className={`${styles.strengthLevelBox} ${styles[strengthLevel]} ${styles[showPasswordStrength]}`}>
           {`Password strength is ${strengthLevel}`}
         </span>
-
         <span className={styles.error}>{findError('password')}</span>
 
         <label htmlFor="confirmPassword">Confirm password</label>
-        <input type="txt" id="confirmPassword" name="confirmPassword" />
+        <input type={passwordVisibility} id="confirmPassword" name="confirmPassword" />
         <span className={styles.error}>{findError('confirmPassword')}</span>
 
         <fieldset className={styles.gender}>
@@ -92,13 +89,13 @@ export default function UncontrolledForm() {
         </div>
         <span className={styles.error}>{findError('country')}</span>
 
-        <button type="submit" disabled={isNotAbleToSubmit} className={styles.submitButton}>
+        <button type="submit" className={styles.submitButton}>
           Submit
         </button>
       </form>
       <div className={styles.returnLink}>
         <Link to="/" type="button">
-          Return
+          Return to the main page
         </Link>
       </div>
     </div>

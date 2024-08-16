@@ -48,19 +48,22 @@ label {
 .strength-level-box {
   align-self: flex-start;
   font-size: 12px;
-  height: 12px;
+  height: 16px;
 }
 
 .low {
   color: rgb(151, 2, 2);
+  border-bottom: 2px solid red;
 }
 
 .middle {
-  color: rgb(223, 220, 49);
+  color: rgb(143, 142, 76);
+  border-bottom: 2px solid rgba(255, 255, 0, 0.918);
 }
 
 .good {
   color: green;
+  border-bottom: 2px solid green;
 }
 
 .visible {
@@ -69,4 +72,8 @@ label {
 
 .invisible {
   opacity: 0;
+}
+
+.return-link {
+  margin-top: 10px;
 }

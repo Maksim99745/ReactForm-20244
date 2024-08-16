@@ -16,7 +16,7 @@ export function FormDataView({ FormData, isLast }: FormDataViewProps) {
       <div className={styles.dataContainer}>Password: {password}</div>
       <div className={styles.dataContainer}>Password confirmation: {confirmPassword}</div>
       <div className={styles.dataContainer}>Gender: {gender}</div>
-      <div className={styles.dataContainer}>Accept Terms and Conditions agreement: {agreement && 'yes'}</div>
+      <div className={styles.dataContainer}>Accept Terms and Conditions agreement: {agreement && 'true'}</div>
       <div className={styles.photoContainer}>
         Avatar:
         <img src={avatar} alt="avatar" width="50px" />

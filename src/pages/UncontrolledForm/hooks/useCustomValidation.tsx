@@ -7,7 +7,6 @@ import { useActions } from '../../Main/hooks/useMainPageActions';
 
 const useCustomValidation = () => {
   const [showPasswordStrength, setShowPasswordStrength] = useState<'visible' | 'invisible'>('invisible');
-  const [isNotAbleToSubmit, setIsNotAbleToSubmit] = useState(false);
   const [errorMessages, setErrorMessages] = useState<yup.ValidationError[] | []>([]);
   const { addUncontrolledFormData } = useActions();
   const navigate = useNavigate();
@@ -28,7 +27,6 @@ const useCustomValidation = () => {
       if (error instanceof yup.ValidationError) {
         setShowPasswordStrength('invisible');
         setErrorMessages(error.inner);
-        setIsNotAbleToSubmit(true);
       }
     }
   };
@@ -38,17 +36,10 @@ const useCustomValidation = () => {
     return error ? error.message : null;
   };
 
-  const handleUnBlockForm = () => {
-    if (isNotAbleToSubmit) {
-      setIsNotAbleToSubmit(false);
-    }
-  };
-
   return {
     handleSubmit,
     findError,
-    handleUnBlockForm,
-    isNotAbleToSubmit,
+
     showPasswordStrength,
     setShowPasswordStrength,
   };

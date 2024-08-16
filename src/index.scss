@@ -67,6 +67,8 @@ button:focus-visible {
   }
 }
 
-.return-link {
-  margin-top: 15px;
+.password-visibility {
+  display: flex;
+  align-self: flex-start;
+  gap: 5px;
 }

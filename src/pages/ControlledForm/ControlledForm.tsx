@@ -1,38 +1,30 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { controlledFormSchema } from '../../core/schemas/schemas';
 import { ControlledFormData } from '../../models/ControlledFormData';
 import { RootState } from '../../store/store';
-import imageToBase64 from '../../utils/imageToBase64';
 import styles from '../forms.module.scss';
-import { useActions } from '../Main/hooks/useMainPageActions';
 import usePasswordStrength from '../Main/hooks/usePasswordStrength';
+import { usePasswordVisibility } from '../UncontrolledForm/hooks/usePasswordVisibility';
+import { useControlledFormSubmit } from './hooks/useControlledFormSubmit';
 
 export default function ControlledForm() {
   const {
     register,
-    reset,
     handleSubmit,
     formState: { errors },
   } = useForm<ControlledFormData>({ resolver: yupResolver(controlledFormSchema), mode: 'onChange' });
 
   const countries = useSelector((state: RootState) => state.countries);
-  const { addControlledFormData } = useActions();
-  const { checkTheStrength, strengthLevel } = usePasswordStrength();
-  const [showPasswordStrength, setShowPasswordStrength] = useState<'visible' | 'invisible'>('invisible');
-  const navigate = useNavigate();
+  const isSubmitAllowed = Object.getOwnPropertyNames(errors).length === 0;
 
-  const onSubmit = async (formData: ControlledFormData) => {
-    const avatarBase64 = await imageToBase64(formData.avatar);
-    const formDataWithImage = { ...formData, avatar: avatarBase64 };
-    addControlledFormData(formDataWithImage);
-    setShowPasswordStrength('invisible');
-    reset();
-    navigate('/');
-  };
+  const { showPasswordStrength, setShowPasswordStrength, onSubmit } = useControlledFormSubmit();
+
+  const { checkTheStrength, strengthLevel } = usePasswordStrength();
+
+  const { passwordVisibility, togglePasswordVisibility } = usePasswordVisibility();
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     checkTheStrength(e.target.value);
@@ -56,7 +48,7 @@ export default function ControlledForm() {
 
         <label htmlFor="password">Password</label>
         <input
-          type="text"
+          type={passwordVisibility}
           id="password"
           {...register('password', {
             onChange: (e) => {
@@ -65,13 +57,16 @@ export default function ControlledForm() {
           })}
           onFocus={() => setShowPasswordStrength('visible')}
         />
+        <div className="password-visibility">
+          <label htmlFor="passwordVisibility">Show passwords</label>
+          <input type="checkbox" name="passwordVisibility" onChange={togglePasswordVisibility} />
+        </div>
         <span className={`${styles.strengthLevelBox} ${styles[strengthLevel]} ${styles[showPasswordStrength]}`}>
           {`Password strength is ${strengthLevel}`}
         </span>
         <span className={styles.error}>{errors?.password?.message}</span>
-
         <label htmlFor="confirmPassword">Confirm password</label>
-        <input type="txt" id="confirmPassword" {...register('confirmPassword')} />
+        <input type={passwordVisibility} id="confirmPassword" {...register('confirmPassword')} />
         <span className={styles.error}>{errors?.confirmPassword?.message}</span>
 
         <fieldset className={styles.gender}>
@@ -111,13 +106,13 @@ export default function ControlledForm() {
         </div>
         <span className={styles.error}>{errors?.country?.message}</span>
 
-        <button type="submit" className={styles.submitButton}>
+        <button type="submit" className={styles.submitButton} disabled={!isSubmitAllowed}>
           Submit
         </button>
       </form>
       <div className={styles.returnLink}>
         <Link to="/" type="button">
-          Return
+          Return to the main page
         </Link>
       </div>
     </div>

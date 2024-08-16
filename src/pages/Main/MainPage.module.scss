@@ -1,0 +1,32 @@
+.tiles-container {
+  display: flex;
+  gap: 10px;
+}
+
+.tile-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 2px solid rgb(83, 83, 83);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.tile-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 2px solid rgb(83, 83, 83);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.link-container {
+  border-bottom: 2px solid rgb(83, 83, 83);
+}
+
+@media (max-width: 768px) {
+  .tiles-container {
+    flex-direction: column;
+  }
+}

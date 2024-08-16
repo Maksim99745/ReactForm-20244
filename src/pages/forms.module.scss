@@ -1,0 +1,79 @@
+label {
+  align-self: flex-start;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.gender {
+  display: flex;
+  border-radius: 5px;
+  justify-content: space-between;
+}
+
+.countries-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.agreement {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 14px;
+  gap: 5px;
+}
+
+.avatar-container {
+  display: flex;
+  font-size: 14px;
+  flex-direction: column;
+}
+
+.error {
+  align-self: flex-start;
+  font-size: 12px;
+  height: 12px;
+  color: red;
+}
+
+.submit-button {
+  margin-top: 10px;
+}
+
+.strength-level-box {
+  align-self: flex-start;
+  font-size: 12px;
+  height: 16px;
+}
+
+.low {
+  color: rgb(151, 2, 2);
+  border-bottom: 2px solid red;
+}
+
+.middle {
+  color: rgb(143, 142, 76);
+  border-bottom: 2px solid rgba(255, 255, 0, 0.918);
+}
+
+.good {
+  color: green;
+  border-bottom: 2px solid green;
+}
+
+.visible {
+  opacity: 1;
+}
+
+.invisible {
+  opacity: 0;
+}
+
+.return-link {
+  margin-top: 10px;
+}
